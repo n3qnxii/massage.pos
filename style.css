@@ -1322,3 +1322,258 @@ body.booking-detail-open{overflow:hidden!important}
 .handover-preview.over{border-color:#e3aa98;background:#fff0eb;color:#8d3f2f;box-shadow:0 8px 20px rgba(145,62,45,.09)}
 .handover-preview strong{font-size:18px}.handover-preview small{opacity:.78}
 .next-booking-note{display:block!important;margin-top:4px!important;padding:4px 7px!important;border-radius:7px!important;background:#fff1c9!important;color:#6e5520!important;font-style:normal!important;font-weight:750!important}
+
+/* v62 — requested UI/interaction fixes */
+:root{--ui-dark-brown:#4f3425;--ui-brown:#6a4935}
+
+/* Remove remaining blue text in login, Settings, Reports, Total Sales and Staff Wages */
+.login-screen,.login-screen *,#loginScreen,#loginScreen *,
+.settings-page,.settings-page *, .settings-list,.settings-list *,
+.report-page,.report-page *, .reports-page,.reports-page *,
+.payroll-total-card,.payroll-total-card *, .summary-card,.summary-card *,
+.total-sales-details,.total-sales-details *, .payment-chip,
+.modal-title h2,.modal-title span{
+  --blue:#4f3425!important;
+}
+.login-screen :is(h1,h2,h3,b,strong,span,label,small,p),
+.settings-page :is(h1,h2,h3,b,strong,label),
+.report-page :is(h1,h2,h3,b,strong,label),
+.reports-page :is(h1,h2,h3,b,strong,label),
+.payroll-total-card span,.payroll-total-card b,
+.total-sales-details :is(h1,h2,h3,b,strong,span){
+  color:var(--ui-dark-brown)!important;
+}
+.payment-chip.cash,.payment-chip.card{color:var(--ui-dark-brown)!important}
+
+/* Services: vertical scroll only, no horizontal page drift */
+.services-page,.sales-page,.service-layout,.main-sales{
+  overflow-x:hidden!important;
+  overscroll-behavior-x:none!important;
+}
+.services-page,.sales-page{touch-action:pan-y!important}
+html,body{touch-action:pan-x pan-y;overscroll-behavior-x:none}
+
+/* Current Order +/- brown text */
+.cart .qty button,.cart-item .qty button,.cart .qty b{color:var(--ui-dark-brown)!important}
+
+/* Cash/Card modal: start time and room never overlap */
+.payment-modal .formgrid,.payment-sheet .formgrid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;align-items:start!important}
+.payment-modal .field,.payment-sheet .field{min-width:0!important}
+.payment-modal .field input,.payment-modal .field select,.payment-sheet .field input,.payment-sheet .field select{width:100%!important;box-sizing:border-box!important}
+@media(max-width:700px){.payment-modal .formgrid,.payment-sheet .formgrid{grid-template-columns:1fr!important}}
+
+/* Outstanding filters: Clear Filters stays in same row */
+.outstanding-filters,.filter-row,.outstanding-filter-row{display:flex!important;align-items:end!important;gap:10px!important;flex-wrap:wrap!important}
+.outstanding-filters .field,.filter-row .field,.outstanding-filter-row .field{flex:1 1 180px!important;margin:0!important}
+.outstanding-filters .secondary-action,.filter-row .secondary-action,.outstanding-filter-row .secondary-action{flex:0 0 auto!important;margin:0!important;min-height:44px!important;align-self:end!important}
+
+/* Staff dropdown stays open until user closes it */
+.staff-detail[open]>summary{background:#f4eadf!important;border-radius:12px 12px 0 0!important}
+.staff-detail>summary{cursor:pointer}
+
+/* Reports scroll naturally and remain centered */
+.reports-page,.report-page{width:min(100%,1440px)!important;margin:0 auto!important;overflow:visible!important}
+.reports-page .panel,.report-page .panel{margin-left:auto!important;margin-right:auto!important}
+.content{overflow-y:auto!important;overscroll-behavior-y:contain!important;scroll-behavior:auto!important}
+
+/* v63 — storage protection + iPad landscape/portrait */
+.storage-settings-button{position:relative}.storage-status-dot{width:10px;height:10px;border-radius:50%;background:#6d8b67;box-shadow:0 0 0 4px #e4eee1;margin-right:8px}
+.storage-monitor-card{display:flex;flex-direction:column;gap:5px;padding:18px;border:1px solid #cbb79f;background:#f7f1e9;border-radius:17px;margin:14px 0}.storage-monitor-card b{font-size:18px;color:#4f3425}.storage-monitor-card span{font-weight:850;color:#54714f}.storage-monitor-card small{color:#806b5b}
+.backup-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.backup-info-grid>div,.backup-warning{padding:15px;border-radius:15px;border:1px solid #dfd0bf;background:#fffaf4;display:flex;flex-direction:column;gap:6px}.backup-info-grid span,.backup-warning span{line-height:1.45;color:#6d5a4d}
+.backup-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.backup-actions button{min-height:48px;border-radius:12px;font-weight:850}.backup-warning{background:#fff3df;border-color:#e4c692}
+.storage-save-error{position:fixed;z-index:2147483600;left:50%;top:22px;transform:translateX(-50%);width:min(520px,calc(100vw - 30px));padding:16px 18px;border-radius:16px;background:#fff0ed;border:2px solid #c95446;box-shadow:0 18px 55px rgba(70,25,20,.25);display:grid;grid-template-columns:1fr auto;gap:5px 12px;color:#7b2d26}.storage-save-error b,.storage-save-error span,.storage-save-error small{grid-column:1}.storage-save-error button{grid-column:2;grid-row:1/4;align-self:center;background:#8d3d34;color:#fff;border:0;border-radius:10px;padding:11px 13px;font-weight:850}
+
+/* iPad landscape */
+@media (min-width:768px) and (max-width:1366px) and (orientation:landscape){
+  .content{padding:18px!important}.panel{max-width:none!important}.settings-list>button{min-height:72px!important}
+  .service-layout{grid-template-columns:minmax(0,1fr) minmax(320px,36%)!important;gap:16px!important}
+  .tablewrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
+}
+/* iPad portrait */
+@media (min-width:700px) and (max-width:1100px) and (orientation:portrait){
+  .content{padding:14px!important}.service-layout{grid-template-columns:1fr!important}.cart{position:relative!important;width:100%!important}
+  .settings-list>button{min-height:76px!important;padding:15px!important}.backup-info-grid{grid-template-columns:1fr}.backup-actions{grid-template-columns:1fr}
+  .tablewrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
+}
+
+/* v64 — Outstanding layout, storage icon, iPad modal refinement */
+.storage-db-icon{width:25px;height:25px;fill:none;stroke:#65452f;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.storage-settings-button .storage-db-icon{width:28px;height:28px}
+.outstanding-modal-shell{width:100%;min-width:0}
+.outstanding-modal-shell .modal-title{padding-right:42px;margin-bottom:14px}
+.outstanding-filter-card{padding:14px;border:1px solid #dfcfbd;border-radius:16px;background:#fbf6ef;margin-bottom:16px}
+.outstanding-filter-card .outstanding-filters{display:grid!important;grid-template-columns:minmax(190px,1fr) minmax(190px,1fr) auto!important;gap:12px!important;align-items:end!important}
+.outstanding-filter-card .field{min-width:0!important;width:100%!important}
+.outstanding-filter-card input,.outstanding-filter-card select{width:100%!important;min-height:46px!important;box-sizing:border-box!important}
+.outstanding-filter-card .secondary-action{height:46px!important;white-space:nowrap!important;margin:0!important}
+.outstanding-section{padding:14px;border:1px solid #e2d3c2;border-radius:16px;background:#fffdf9;margin-top:12px}
+.outstanding-section.bank-section{background:#f3f7fb;border-color:#cddce8}
+.outstanding-section.cash-section{background:#f1f7ef;border-color:#cfdfca}
+.outstanding-section-title{display:flex;align-items:center;gap:10px;margin-bottom:12px;color:#4f3425}
+.outstanding-section-title>svg{width:23px;height:23px}.outstanding-section-title>div{display:flex;flex-direction:column;gap:2px}.outstanding-section-title b{font-size:17px}.outstanding-section-title small{font-size:12px;color:#806b5c}
+.outstanding-history{display:grid;gap:9px}
+#modal .modalbox:has(.outstanding-modal-shell){width:min(820px,calc(100vw - 32px))!important;max-height:min(82vh,850px)!important;overflow-y:auto!important;padding:22px!important}
+@media (min-width:700px) and (max-width:1100px) and (orientation:portrait){
+  #modal .modalbox:has(.outstanding-modal-shell){width:calc(100vw - 46px)!important;max-height:78vh!important}
+  .outstanding-filter-card .outstanding-filters{grid-template-columns:1fr 1fr!important}
+  .outstanding-filter-card .secondary-action{grid-column:1/-1!important;width:100%!important}
+}
+@media (max-width:699px){
+  .outstanding-filter-card .outstanding-filters{grid-template-columns:1fr!important}
+  .outstanding-filter-card .secondary-action{width:100%!important}
+}
+
+/* v65 — Outstanding date field: label above input, both inside one field */
+.outstanding-filter-card .outstanding-filters{
+  grid-template-columns:minmax(220px,1fr) minmax(220px,1fr) auto!important;
+  align-items:end!important;
+}
+.outstanding-filter-card .field{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-end!important;
+  gap:7px!important;
+  min-width:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+}
+.outstanding-filter-card .field label{
+  display:block!important;
+  position:static!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0 2px!important;
+  line-height:1.2!important;
+  font-size:13px!important;
+  font-weight:800!important;
+  color:#4f3425!important;
+}
+.outstanding-filter-card .field input[type="date"],
+.outstanding-filter-card .field select{
+  display:block!important;
+  width:100%!important;
+  height:48px!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:0 12px!important;
+  border:1px solid #d8c5ae!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  color:#4f3425!important;
+  box-sizing:border-box!important;
+}
+.outstanding-filter-card .secondary-action{
+  height:48px!important;
+  min-height:48px!important;
+  align-self:end!important;
+}
+
+/* v66 — Reports: full-width All Branches Summary + stable scrolling */
+.page-reports .content{overflow-y:auto!important;overflow-x:hidden!important;scroll-behavior:auto!important;overscroll-behavior-y:contain!important;overflow-anchor:none!important}
+.page-reports .report-panel{width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important}
+.page-reports .all-branches-summary-full{width:100%!important;max-width:none!important;margin:18px 0 20px!important;padding:0!important;box-sizing:border-box!important}
+.page-reports .all-branches-summary-full>h3{width:100%!important;margin:0 0 12px!important}
+.page-reports .all-branches-tablewrap{width:100%!important;max-width:none!important;margin:0!important;box-sizing:border-box!important;overflow-x:auto!important;border-radius:14px!important}
+.page-reports .all-branches-tablewrap table{width:100%!important;min-width:1050px!important;table-layout:auto!important}
+.page-reports .all-branches-tablewrap th,.page-reports .all-branches-tablewrap td{white-space:nowrap!important}
+@media (min-width:768px) and (max-width:1366px){
+  .page-reports .content{padding-left:14px!important;padding-right:14px!important}
+  .page-reports .report-panel{padding-left:14px!important;padding-right:14px!important}
+  .page-reports .all-branches-summary-full{width:100%!important}
+}
+\n/* v67 — All Branches Staff column + Net final colored column */\n.page-reports .all-branches-tablewrap table th:nth-child(9),\n.page-reports .all-branches-tablewrap table td:nth-child(9){background:#f7efe5!important;text-align:center!important}\n.page-reports .all-branches-tablewrap table th:nth-child(10){background:#e6f2e8!important;color:#3f5f45!important;text-align:center!important;border-top-right-radius:12px}\n.page-reports .all-branches-tablewrap table td:nth-child(10){background:#f0f8f1!important;text-align:center!important}\n.page-reports .all-branches-tablewrap table tr:last-child td:nth-child(10){border-bottom-right-radius:12px}\n.page-reports .all-branches-tablewrap .staff-column{min-width:120px!important}\n.page-reports .all-branches-tablewrap .net-column{min-width:115px!important}\n.page-reports .all-branches-tablewrap .net-chip{display:inline-flex;align-items:center;justify-content:center;min-width:78px;padding:8px 12px;border-radius:10px;background:#dff0e3;border:1px solid #acd2b5;color:#365d40;font-weight:900}\n.page-reports .all-branches-tablewrap .payroll-detail-btn{background:#fffaf4!important;border:1px solid #8c7968!important;color:#4f3425!important;box-shadow:0 2px 5px rgba(79,52,37,.08)!important}\n
+.reception-bookings{background:#fffdf9;border:1px solid #ddcbb7;border-radius:20px;padding:20px;margin-bottom:22px}.reception-bookings .headrow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.reception-date{margin:14px 0}.reception-date label{display:flex;align-items:center;gap:12px}.reception-date input{padding:10px;border:1px solid #d5c2ae;border-radius:10px}.reception-bookings .tablewrap{overflow-x:auto}.reception-bookings table{width:100%;min-width:780px}.reception-bookings td{padding:12px 9px}
+
+/* v69 Reception late management */
+.reception-alert-panel{margin:14px 0;border:1px solid #e2c4a1;background:#fff5e7;border-radius:16px;overflow:hidden}.reception-alert-panel>summary{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;color:#5d3c27;font-weight:900}.reception-alert-panel>summary>img{width:23px}.reception-alert-panel>summary small{margin-left:auto;color:#8e6c52}.reception-alert-count{background:#c64b39;color:#fff;padding:4px 10px;border-radius:99px;font-size:11px}.reception-alert-body{padding:12px;display:grid;gap:8px}.reception-alert-item{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid #ecdaca;border-radius:12px;background:white;flex-wrap:wrap}.reception-alert-item>div{flex:1 1 190px;display:grid}.reception-alert-item small{color:#88705c}.reception-alert-item>a,.reception-alert-item>button{display:inline-flex;align-items:center;gap:5px;padding:9px 11px;border-radius:9px;border:1px solid #d8c3ab;color:#583d2b;background:#fffaf4;text-decoration:none}.reception-alert-item .cancel-action{background:#fbe5e1;color:#983a30}
+.late-minute-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:16px 0}.late-minute-grid button{background:#f7ead9;color:#67452c;border:1px solid #dcc3a5;border-radius:12px;padding:15px 4px;font-size:16px;font-weight:900}.late-minute-grid button.selected{background:#79573b;color:#fff}
+.reception-directories{margin:12px 0;padding:15px;border-radius:15px;background:#f6f0e7;border:1px solid #e1d1bd}.reception-directories h3{margin:0 0 10px}.reception-branch-chips{display:flex;flex-wrap:wrap;gap:8px}.reception-branch-chips button{display:flex;align-items:center;gap:6px;border:1px solid #d7bd9e;border-radius:10px;background:white;padding:10px;color:#583e2d}.reception-customer-directory{display:grid;gap:9px;max-height:55vh;overflow-y:auto}.reception-directory-row{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid #e5d6c6;border-radius:12px;padding:13px}.reception-directory-row div{display:grid}.reception-directory-row small{color:#907a68}.reception-directory-row a{color:#5b4737}
+@media(max-width:650px){.late-minute-grid{grid-template-columns:repeat(3,1fr)}.reception-alert-panel>summary{flex-wrap:wrap}}
+
+/* v70 reception controls */
+.reception-toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.reception-icon-button{position:relative;display:grid;place-items:center;width:46px;height:44px;border-radius:13px;border:1px solid #d9c3ab;background:#f4e9dc;color:#513525;cursor:pointer;flex:0 0 auto}
+.reception-icon-button img{width:22px;height:22px;filter:brightness(0) saturate(100%) invert(28%) sepia(24%) saturate(636%) hue-rotate(342deg) brightness(91%) contrast(89%)!important}
+.reception-icon-badge{position:absolute;top:-8px;right:-7px;min-width:19px;height:19px;border-radius:20px;background:#c8453d;color:#fff;font-size:11px;line-height:19px;font-style:normal;text-align:center;font-weight:900;padding:0 3px}
+.directory-branch-tabs{display:flex;gap:7px;overflow-x:auto;padding:10px 0 14px;-webkit-overflow-scrolling:touch}
+.directory-branch-tabs button{white-space:nowrap;border:1px solid #d7c6b2;border-radius:10px;padding:10px 12px;background:#f6ede3;color:#513725;font-weight:700}
+.directory-branch-tabs button.active{background:#6b4a35;color:#fff}
+.reception-customer-directory{display:grid;gap:8px;max-height:48vh;overflow-y:auto}
+.directory-customer-button{display:grid;grid-template-columns:42px 1fr 16px;align-items:center;gap:10px;padding:12px;border:1px solid #e1d4c4;border-radius:13px;background:#fffaf5;text-align:left;color:#4e3728}
+.directory-customer-button>span:nth-child(2){display:grid;gap:3px}.directory-customer-button small{color:#857060}
+.directory-person-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:#edddcb}
+.directory-arrow{font-size:20px}
+.reception-late-page{max-height:58vh;overflow:auto}
+.reception-late-page .reception-alert-item{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.reception-late-page .reception-alert-item>div{flex:1 1 210px}
+.availability-main-page .availability-row-name b{font-size:15px!important}
+.availability-main-page .availability-row-time b{font-size:13px!important}
+.availability-main-page .availability-row-name span,.availability-main-page .availability-row-time em{font-size:11px!important}
+.availability-main-page .availability-branch-head b{font-size:16px!important}
+.availability-main-page .availability-row-status{font-size:11px!important}
+.page-availability,.page-bookings{scroll-behavior:auto!important;overflow-anchor:none!important;-webkit-overflow-scrolling:touch!important}
+
+/* v71 Reception list polish */
+.reception-bookings{margin-bottom:32px!important}
+.reception-bookings+.availability-main-page{margin-top:24px!important}
+.reception-toolbar{position:relative;gap:10px}
+.reception-calendar-button{flex:none}
+.reception-date-native{position:absolute;right:136px;top:50%;width:46px;height:44px;opacity:0;pointer-events:none}
+.reception-selected-date{display:flex;align-items:center;gap:8px;padding:12px 3px;color:#715540;font-weight:800}
+.reception-selected-date img{width:17px;height:17px}
+.reception-selected-date b{margin-left:auto;font-size:12px;color:#8b7666}
+.reception-branch-name strong{font-weight:900!important;color:#4f3322;font-size:14px;line-height:1.4;display:block;min-width:165px}
+.reception-tablewrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.reception-tablewrap table{min-width:860px}
+.reception-status{display:inline-flex;align-items:center;gap:5px;border:1px solid #d9c5ad;border-radius:10px;padding:7px 10px;font-weight:850;font-size:12px;white-space:nowrap;color:#684d39;background:#f3e9df}
+.reception-status img{width:15px;height:15px}
+.reception-status-booked{background:#f0e9dc;color:#755634;border-color:#deccaa}
+.reception-status-late{background:#fff0d8;color:#9c5f16;border-color:#ecc98e}
+.reception-status-paid{background:#e9eff9;color:#405b8d;border-color:#bdd0eb}
+.reception-status-completed{background:#e4f1e4;color:#386b43;border-color:#b5d7b9}
+.reception-status-cancelled{background:#f8e2df;color:#a14339;border-color:#e8b4ab}
+.cancelled-customer-list>div{display:flex;align-items:center;gap:9px}
+.cancelled-record-remove{margin-left:auto;border:1px solid #ebc6bd;border-radius:9px;background:#fff2ee;color:#a54138;min-width:30px;height:30px;font-size:21px;cursor:pointer}
+@media(max-width:800px){.reception-bookings{margin-bottom:24px!important}.reception-toolbar{gap:7px}.reception-branch-name strong{font-size:13px}}
+
+/* v72 service options and high-visibility notifications */
+#toast{position:fixed!important;top:max(14px,env(safe-area-inset-top))!important;left:50%!important;right:auto!important;bottom:auto!important;width:min(560px,calc(100vw - 28px))!important;z-index:2147483600!important;text-align:left!important;box-sizing:border-box!important;padding:15px 18px 15px 48px!important;min-height:54px!important;border:1px solid #cfb699!important;background:#513829!important;color:#fff!important;box-shadow:0 14px 45px rgba(52,30,19,.28)!important;font-size:14px!important;line-height:1.4!important;pointer-events:none!important}
+#toast::before{content:'!';position:absolute;left:15px;top:50%;transform:translateY(-50%);width:24px;height:24px;line-height:24px;text-align:center;border-radius:50%;background:#fff4e7;color:#684630;font-weight:950}
+#toast.success{background:#356649!important}#toast.alert,#toast.danger{background:#9a4c32!important}
+.booking-float-notice{top:max(85px,calc(env(safe-area-inset-top) + 85px))!important;z-index:2147483500!important}
+.service-addons-heading{margin:15px 0 10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;color:#563c2b;font-size:15px;font-weight:800}
+.service-addons-heading img{width:17px;height:17px;filter:brightness(0) saturate(100%) invert(30%) sepia(28%) saturate(620%) hue-rotate(346deg) brightness(90%) contrast(85%)!important}
+.service-addons-heading span{margin-left:auto;font-weight:500;font-size:11px;color:#8e7661}
+.page-sales .services{margin-bottom:9px!important}
+@media(max-width:750px){#toast{font-size:13px!important}.service-addons-heading span{margin-left:0}}
+
+/* v73: branch-only staff notices, larger phone/time and explicit late color */
+.branch-booking-alerts{display:grid;gap:8px;margin:12px 0}
+.branch-booking-alert{display:flex;width:100%;align-items:center;gap:11px;text-align:left;padding:13px 15px;border:1px solid #d9b782;border-radius:14px;background:#fff5df;color:#704720;cursor:pointer}
+.branch-booking-alert>span{display:grid;gap:4px;flex:1}.branch-booking-alert small{color:#7b5b38}.branch-booking-alert strong{padding:4px 8px;border-radius:12px;background:#b85d34;color:white;font-size:11px}
+.booking-table .phone-cell{font-size:17px!important;font-weight:850!important;white-space:nowrap}
+.booking-table .booking-time-cell b{font-size:18px!important;font-weight:900!important}
+.booking-table .booking-time-cell b.staff-booking-late-time{color:#c4352d!important;background:#fff0ec;border-radius:7px;padding:3px 5px}
+.booking-table .late-action:disabled{opacity:.5;cursor:not-allowed}
+.room-picker{margin-top:15px;margin-bottom:17px!important}
+
+/* v74: clear, readable staff booking table with no customer phone numbers */
+.page-bookings .staff-booking-clean{width:100%;overflow-x:auto;border-radius:16px;scrollbar-gutter:stable}
+.page-bookings .staff-booking-clean table{width:100%;min-width:740px;table-layout:auto;border-collapse:separate;border-spacing:0}
+.page-bookings .staff-booking-clean th{padding:15px 12px!important;font-size:13px!important;letter-spacing:.015em;white-space:nowrap;color:#4b3426}
+.page-bookings .staff-booking-clean td{padding:16px 12px!important;vertical-align:middle;line-height:1.5;font-size:14px!important}
+.page-bookings .staff-booking-clean tr:not(:last-child) td{border-bottom:1px solid #e9dcd0}
+.page-bookings .staff-booking-clean .booking-time-cell b{font-size:20px!important;font-weight:900!important}
+.page-bookings .staff-booking-clean .booking-time-cell span{line-height:1.5}
+.page-bookings .staff-booking-clean .customer-name{font-size:16px!important;font-weight:850}
+.page-bookings .staff-booking-status{font-size:15px!important;font-weight:850!important;line-height:1.4!important;padding:8px 13px!important;border-radius:12px!important;display:inline-flex!important;justify-content:center;min-width:86px;text-align:center;white-space:nowrap}
+.page-bookings .staff-booking-clean .booking-actions{display:flex;gap:8px;justify-content:flex-start;flex-wrap:wrap}
+.page-bookings .staff-booking-clean .booking-actions button{font-size:13px!important;min-height:40px;padding:8px 12px!important}
+/* customer directory remove icon occupies its own column; opening customer remains easy */
+.directory-customer-row{display:grid;grid-template-columns:minmax(0,1fr) 40px;align-items:center;gap:9px}
+.directory-customer-row .directory-customer-button{width:100%;min-width:0}
+.directory-remove-customer{display:grid;place-items:center;width:38px;height:40px;border-radius:12px;border:1px solid #e4b6ae;background:#fff0ec;color:#a43a31;font-size:25px;line-height:1;cursor:pointer;font-weight:600}
+.directory-remove-customer:hover{background:#f9dbd6}
+@media (max-width:900px){.page-bookings .staff-booking-clean td{padding:12px 9px!important}.page-bookings .staff-booking-status{font-size:14px!important}}
